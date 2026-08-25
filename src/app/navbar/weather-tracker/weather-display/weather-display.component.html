@@ -1,109 +1,133 @@
 <div class="view-container">
   <div class="back-btn-container">
-    <button class="button button is-light back-btn" (click)="onBack()">
+    <button class="button is-light back-btn" (click)="onBack()">
       <strong>Back</strong>
     </button>
   </div>
-  <div class="container">
+
+  <div class="summary-row">
     @if (weatherTrackingService.currentWeatherData$ | async; as weatherData) {
-      <div class="card">
+      <div class="card summary-card">
         <header class="card-header">
-          <p class="card-header-title">{{ weatherData.data.location.name }}</p>
-          <p class="card-header-title">
-            {{ weatherData.data.location.region }}
-          </p>
-          <p class="card-header-title">
-            {{ weatherData.data.location.country }}
+          <p class="card-header-title location-title">
+            {{ weatherData.data.location.name }}
+            <span class="location-detail">
+              {{ weatherData.data.location.region }}, {{ weatherData.data.location.country }}
+            </span>
           </p>
         </header>
 
         <div class="card-content">
-          <div class="content">
-            <h3><strong>Current Weather</strong></h3>
-            <span></span>
-            <p>
-              Last Updated: {{ weatherData.data.currentWeather.lastUpdated }}
-            </p>
-            <p>
-              Temperature Celsius: {{ weatherData.data.currentWeather.tempC }}
-            </p>
-            <p>Wind Speed Mph: {{ weatherData.data.currentWeather.windMph }}</p>
-            <p>Rain (mm): {{ weatherData.data.currentWeather.precipMm }}</p>
-            <p>Cloud Cover: {{ weatherData.data.currentWeather.cloudCover }}</p>
-            <p>UV index: {{ weatherData.data.currentWeather.uv }}</p>
+          <h3 class="section-title">Current Weather</h3>
+          <div class="stat-grid">
+            <div class="stat">
+              <span class="stat-value">{{ weatherData.data.currentWeather.tempC }}°C</span>
+              <span class="stat-label">Temperature</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">{{ weatherData.data.currentWeather.windMph }} mph</span>
+              <span class="stat-label">Wind</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">{{ weatherData.data.currentWeather.precipMm }} mm</span>
+              <span class="stat-label">Rain</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">{{ weatherData.data.currentWeather.cloudCover }}%</span>
+              <span class="stat-label">Cloud cover</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">{{ weatherData.data.currentWeather.uv }}</span>
+              <span class="stat-label">UV index</span>
+            </div>
           </div>
+          <p class="last-updated">Last updated {{ weatherData.data.currentWeather.lastUpdated }}</p>
         </div>
       </div>
     }
+
     @if (this.fishStabilityService.fishStability()) {
-      <div class="card fish-stability-card">
+      <div class="card summary-card fish-stability-card">
         <header class="card-header">
           <p class="card-header-title fish-stability-header">Fish Stability</p>
         </header>
 
-        <div class="card-content fish-content-container">
-          <div class="content">
-            @for (fish of fishList(); track fish.name) {
-              <div class="fish-content">
-                <img [src]="'../../assets/' + fish.image" [alt]="fish.name" />
-                <span
-                  class="fish-name"
-                  [ngClass]="'stability-' + (fishStabilityService.fishStability()?.[mapFishNameToSpecies(fish.name)] || 'caution')"
-                >
-                  {{ fish.name + getStabilityLabel(fishStabilityService.fishStability()?.[mapFishNameToSpecies(fish.name)] || 'caution') }}
-                </span>
-              </div>
-            }
-          </div>
+        <div class="card-content">
+          @if (fishList().length > 0) {
+            <div class="fish-content-container">
+              @for (fish of fishList(); track fish.name) {
+                <div class="fish-content">
+                  <img [src]="'../../assets/' + fish.image" [alt]="fish.name" />
+                  <span
+                    class="fish-name"
+                    [ngClass]="'stability-' + (fishStabilityService.fishStability()?.[mapFishNameToSpecies(fish.name)] || 'caution')"
+                  >
+                    {{ fish.name + getStabilityLabel(fishStabilityService.fishStability()?.[mapFishNameToSpecies(fish.name)] || 'caution') }}
+                  </span>
+                </div>
+              }
+            </div>
+          } @else {
+            <p class="no-favourites has-text-grey">
+              You haven't picked any favourite fish yet.<br />
+              Choose up to 4 on the
+              <a routerLink="/fish-favourites">Fish Favourites</a> page to see how
+              they're biting.
+            </p>
+          }
         </div>
       </div>
     }
-    
   </div>
 
-  <div class="container">
-    @if (weatherTrackingService.historicalWeatherData$ | async; as weatherDataArray) {
-      @for (weatherData of weatherDataArray; track weatherData.weatherId) {
-        <div class="card">
-          <header class="card-header">
-            <p class="card-header-title">
-              Date: {{ weatherData.data.historicalWeather.date }}
-            </p>
-          </header>
+  @if (weatherTrackingService.historicalWeatherData$ | async; as weatherDataArray) {
+    @if (weatherDataArray.length > 0) {
+      <h3 class="history-title">Previous {{ weatherDataArray.length }} days</h3>
+      <div class="history-grid">
+        @for (weatherData of weatherDataArray; track weatherData.weatherId) {
+          <div class="card history-card">
+            <header class="card-header">
+              <p class="card-header-title">
+                {{ weatherData.data.historicalWeather.date | date: 'EEEE d MMMM' }}
+              </p>
+            </header>
 
-          <div class="card-content">
-            <div class="content">
-              <h4><strong>Daily Averages</strong></h4>
-              <p>
-                Temperature Celsius:
-                {{ weatherData.data.historicalWeather.tempC }}
-              </p>
-              <p>
-                Wind Speed Mph:
-                {{ weatherData.data.historicalWeather.midday.windMph }}
-              </p>
-              <p>
-                Rain (mm):
-                {{ weatherData.data.historicalWeather.totalPrecipMm }}
-              </p>
-              <p>UV index: {{ weatherData.data.historicalWeather.uv }}</p>
-              <h4><strong>Midday</strong></h4>
-              <p>
-                Cloud coverage:
-                {{ weatherData.data.historicalWeather.midday.cloudCover }}
-              </p>
-              <p>
-                Wind Speed Mph:
-                {{ weatherData.data.historicalWeather.midday.windMph }}
-              </p>
-              <p>
-                Humidity:
-                {{ weatherData.data.historicalWeather.midday.humidity }}
-              </p>
+            <div class="card-content">
+              <h4 class="section-title">Daily Averages</h4>
+              <div class="stat-rows">
+                <div class="stat-row">
+                  <span class="stat-label">Temperature</span>
+                  <span class="stat-value">{{ weatherData.data.historicalWeather.tempC }}°C</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Rain</span>
+                  <span class="stat-value">{{ weatherData.data.historicalWeather.totalPrecipMm }} mm</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">UV index</span>
+                  <span class="stat-value">{{ weatherData.data.historicalWeather.uv }}</span>
+                </div>
+              </div>
+
+              <h4 class="section-title">Midday</h4>
+              <div class="stat-rows">
+                <div class="stat-row">
+                  <span class="stat-label">Wind</span>
+                  <span class="stat-value">{{ weatherData.data.historicalWeather.midday.windMph }} mph</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Cloud cover</span>
+                  <span class="stat-value">{{ weatherData.data.historicalWeather.midday.cloudCover }}%</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Humidity</span>
+                  <span class="stat-value">{{ weatherData.data.historicalWeather.midday.humidity }}%</span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      }
+        }
+      </div>
     }
-  </div>
+  }
 </div>

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { WeatherTrackingService } from '../services/weather-tracking.service';
 import { FormBuilder, Validators, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
-import { switchMap, tap } from 'rxjs';
+import { switchMap } from 'rxjs';
 import { FishStabilityService } from '../services/fish-stability.service';
 
 @Component({

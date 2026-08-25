@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { WeatherTrackerFormComponent } from './weather-tracker-form/weather-tracker-form.component';
 import { WeatherDisplayComponent } from './weather-display/weather-display.component';
 import { WeatherTrackingService } from './services/weather-tracking.service';

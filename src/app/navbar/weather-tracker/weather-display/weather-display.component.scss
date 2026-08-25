@@ -1,36 +1,108 @@
+.view-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+}
+
 .back-btn-container {
   display: flex;
-  width: 100%;
-  align-items: center;
   justify-content: flex-end;
-  .back-btn {
-    margin-top: 20px;
-    margin-right: 20px
+  padding: 20px 0;
+}
+
+.summary-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: 1.5rem;
+}
+
+.summary-card {
+  flex: 1 1 340px;
+  max-width: 480px;
+}
+
+.location-title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.location-detail {
+  font-weight: normal;
+  font-size: 0.85rem;
+  color: #7a7a7a;
+}
+
+.section-title {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+
+  &:not(:first-child) {
+    margin-top: 1.25rem;
   }
 }
 
-.fish-stability-card {
-  width: auto !important;
-  height: 283px !important;
-  .fish-stability-header {
-    justify-content: center;
-  }
-  .fish-content-container {
-    padding: 12px !important;
-    margin-left: 24px;
-    margin-right: 24px;
-    .fish-content {
-      display: flex;
-      align-items: center;
-      height: 50px;
-      width: 300px;
-      gap: 20px;
-      img {
-        height: 60px;
-        width: 60px;
-      }
+// Current weather: prominent values in a wrapping tile grid
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 0.75rem;
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f6fbf9;
+    border-radius: 8px;
+    padding: 0.75rem 0.5rem;
+
+    .stat-value {
+      font-weight: bold;
+      font-size: 1.15rem;
+      color: #363636;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: #7a7a7a;
     }
   }
+}
+
+.last-updated {
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  color: #7a7a7a;
+}
+
+.fish-stability-header {
+  justify-content: center;
+}
+
+.fish-content-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  .fish-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    img {
+      height: 60px;
+      width: 60px;
+    }
+  }
+}
+
+.no-favourites {
+  text-align: center;
+  padding: 1rem 0;
 }
 
 .fish-name {
@@ -59,3 +131,48 @@
   color: #b71c1c;
 }
 
+// History: one responsive grid of equal-width day cards
+.history-title {
+  font-weight: bold;
+  font-size: 1.15rem;
+  color: rgb(0, 100, 80);
+  margin: 2rem 0 1rem;
+  text-align: center;
+}
+
+.history-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.history-card .card-header-title {
+  font-size: 0.9rem;
+}
+
+.stat-rows {
+  display: flex;
+  flex-direction: column;
+
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.3rem 0;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: #7a7a7a;
+    }
+
+    .stat-value {
+      font-weight: bold;
+      font-size: 0.9rem;
+      color: #363636;
+    }
+  }
+}

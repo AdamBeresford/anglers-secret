@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { WeatherTrackingService } from '../services/weather-tracking.service';
 import { AsyncPipe, CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { FishStabilityService } from '../services/fish-stability.service';
 import { FishFavouritesService } from '../../fish-favourites/services/fish-favourites.service';
 import { FishSpecies } from '../models/fish.model';
@@ -12,7 +13,8 @@ import { FishSpecies } from '../models/fish.model';
     standalone: true,
     imports: [
       CommonModule,
-      AsyncPipe
+      AsyncPipe,
+      RouterLink
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
