@@ -1,3 +1,67 @@
-<div class="container">
-  <h1>Welcome to the Anglers secret</h1>
+<div class="home-container">
+  <section class="hero-section">
+    @if (authService.currentUser(); as user) {
+      <h1 class="title is-2 hero-title">Welcome back, {{ user.username }}</h1>
+    } @else {
+      <h1 class="title is-2 hero-title">The Angler's Secret</h1>
+    }
+    <p class="subtitle hero-subtitle">
+      Know how the fish are biting before you leave the house. We read the last
+      five days of weather to judge how settled conditions are for the species
+      you care about.
+    </p>
+
+    @if (!authService.isLoggedIn()) {
+      <div class="buttons hero-buttons">
+        <a class="button is-primary is-medium" routerLink="/signup">
+          <strong>Get started</strong>
+        </a>
+        <a class="button is-light is-medium" routerLink="/login">Log in</a>
+      </div>
+    }
+  </section>
+
+  <section class="feature-cards">
+    <a class="card feature-card" routerLink="/weather-tracker">
+      <div class="card-content">
+        <img src="../../assets/trout-icon.png" alt="" class="feature-icon" />
+        <h2 class="title is-5">Weather Tracker</h2>
+        <p>
+          Search any location for current conditions, the past five days of
+          weather, and a biting forecast for your chosen fish.
+        </p>
+        <span class="feature-link">Check conditions &rarr;</span>
+      </div>
+    </a>
+
+    <a class="card feature-card" routerLink="/fish-favourites">
+      <div class="card-content">
+        <img src="../../assets/common-carp-icon.png" alt="" class="feature-icon" />
+        <h2 class="title is-5">Fish Favourites</h2>
+        <p>
+          Pick up to four species to follow. Signed-in anglers keep their
+          selection between visits.
+        </p>
+        <span class="feature-link">Choose your fish &rarr;</span>
+      </div>
+    </a>
+  </section>
+
+  <section class="how-it-works">
+    <h2 class="title is-4 how-title">How it works</h2>
+    <div class="steps">
+      <div class="step">
+        <span class="step-number">1</span>
+        <p>Pick your favourite fish species.</p>
+      </div>
+      <div class="step">
+        <span class="step-number">2</span>
+        <p>Enter the postcode of where you plan to fish.</p>
+      </div>
+      <div class="step">
+        <span class="step-number">3</span>
+        <p>See which of your fish are biting, cautious, or inactive.</p>
+      </div>
+    </div>
+  </section>
 </div>
