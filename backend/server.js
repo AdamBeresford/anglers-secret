@@ -5,14 +5,38 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 
 const config = require('./config');
 const User = require('./models/User');
 
 const app = express();
 
+app.use(helmet());
 app.use(cors());
-app.use(bodyParser.json());
+// Bodies here are small JSON payloads; a low cap blunts trivial memory-exhaustion attempts
+app.use(bodyParser.json({ limit: '10kb' }));
+
+// Brute-force protection on credential checks. Counts only failed attempts so a
+// legitimate user working normally is never locked out by their own success.
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 10,
+  skipSuccessfulRequests: true,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+  message: { message: 'Too many attempts. Please try again in 15 minutes.' },
+});
+
+// Signups are rarer than logins, so this is capped per IP over a longer window
+const signupLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  limit: 5,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+  message: { message: 'Too many accounts created from this address. Please try again later.' },
+});
 
 mongoose.connect(config.mongoUri)
   .then(() => console.log('✅ MongoDB connected'))
@@ -50,6 +74,16 @@ app.get('/api/weather/historical', requireWeatherKey, async (req, res) => {
   }
 });
 
+// A valid hash of an unguessable value, compared against when the email is unknown so
+// that failed logins cost the same time whether or not the account exists.
+const DUMMY_PASSWORD_HASH = bcrypt.hashSync(require('crypto').randomBytes(32).toString('hex'), 10);
+
+// Mongoose errors embed the submitted values (error.keyValue, error.errors[].value),
+// so only the message is logged to keep personal data out of the log files.
+function logError(context, error) {
+  console.error(`${context}:`, error.message);
+}
+
 function createToken(user) {
   return jwt.sign({ userId: user._id }, config.jwtSecret, { expiresIn: config.jwtExpiresIn });
 }
@@ -76,7 +110,7 @@ async function requireAuth(req, res, next) {
 }
 
 // SIGNUP route
-app.post('/api/auth/signup', async (req, res) => {
+app.post('/api/auth/signup', signupLimiter, async (req, res) => {
   try {
     const username = (req.body.username || '').trim();
     const email = (req.body.email || '').trim().toLowerCase();
@@ -111,26 +145,32 @@ app.post('/api/auth/signup', async (req, res) => {
     if (error.name === 'ValidationError') {
       return res.status(400).json({ message: 'Invalid signup details' });
     }
-    console.error(error);
+    logError('Signup failed', error);
     res.status(500).json({ message: 'An error occurred' });
   }
 });
 
 // LOGIN route
-app.post('/api/auth/login', async (req, res) => {
+app.post('/api/auth/login', authLimiter, async (req, res) => {
   try {
     const email = (req.body.email || '').trim().toLowerCase();
     const password = req.body.password || '';
 
     const user = await User.findOne({ email });
-    if (!user) return res.status(401).json({ message: 'Invalid credentials' });
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(401).json({ message: 'Invalid credentials' });
+    // Always run a comparison, even for an unknown email. Returning early would
+    // make "no such account" measurably faster and leak which emails are registered.
+    const hash = user ? user.password : DUMMY_PASSWORD_HASH;
+    const isMatch = await bcrypt.compare(password, hash);
+
+    if (!user || !isMatch) return res.status(401).json({ message: 'Invalid credentials' });
+
+    user.lastLoginAt = new Date();
+    await user.save();
 
     res.json({ token: createToken(user), user: toPublicUser(user) });
   } catch (error) {
-    console.error(error);
+    logError('Login failed', error);
     res.status(500).json({ message: 'An error occurred' });
   }
 });

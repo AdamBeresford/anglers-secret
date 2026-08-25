@@ -18,7 +18,9 @@ const userSchema = new mongoose.Schema(
       lowercase: true,
       match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     },
-    password: { type: String, required: true }
+    password: { type: String, required: true },
+    // Tracked so dormant accounts can be identified for the retention policy
+    lastLoginAt: { type: Date }
   },
   { timestamps: true }
 );
