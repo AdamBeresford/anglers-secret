@@ -1,3 +1,60 @@
-<div class="container">
-  <h1>This is the login page</h1>
+<div class="container auth-container">
+  <div class="box">
+    <h1 class="title is-4">Log in</h1>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="field">
+        <label class="label">Email</label>
+        <div class="control">
+          <input
+            class="input"
+            type="email"
+            placeholder="you@example.com"
+            formControlName="email"
+            autocomplete="email"
+          />
+          @if (emailControl.invalid && (emailControl.dirty || emailControl.touched)) {
+            <span class="help is-danger">A valid email is <strong>required</strong></span>
+          }
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Password</label>
+        <div class="control">
+          <input
+            class="input"
+            type="password"
+            placeholder="Password"
+            formControlName="password"
+            autocomplete="current-password"
+          />
+          @if (passwordControl.invalid && (passwordControl.dirty || passwordControl.touched)) {
+            <span class="help is-danger">Password is <strong>required</strong></span>
+          }
+        </div>
+      </div>
+
+      @if (errorMessage(); as message) {
+        <div class="notification is-danger is-light">{{ message }}</div>
+      }
+
+      <div class="field">
+        <div class="control">
+          <button
+            class="button is-primary"
+            type="submit"
+            [class.is-loading]="submitting()"
+            [disabled]="loginForm.invalid || submitting()"
+          >
+            Log in
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <p class="has-text-grey">
+      Don't have an account? <a routerLink="/signup">Sign up</a>
+    </p>
+  </div>
 </div>

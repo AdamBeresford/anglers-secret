@@ -10,12 +10,19 @@
 
     <div class="navbar-end">
       <div class="navbar-item">
-        <div class="buttons">
-          <a class="button is-primary" routerLink="/signup">
-            <strong>Sign up</strong>
-          </a>
-          <a class="button is-light" routerLink="/login"> Log in </a>
-        </div>
+        @if (authService.currentUser(); as user) {
+          <span class="navbar-item">Welcome, <strong>&nbsp;{{ user.username }}</strong></span>
+          <div class="buttons">
+            <button class="button is-light" type="button" (click)="logout()">Log out</button>
+          </div>
+        } @else {
+          <div class="buttons">
+            <a class="button is-primary" routerLink="/signup">
+              <strong>Sign up</strong>
+            </a>
+            <a class="button is-light" routerLink="/login"> Log in </a>
+          </div>
+        }
       </div>
     </div>
   </div>

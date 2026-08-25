@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
     selector: 'app-navbar',
@@ -9,4 +10,15 @@ import { RouterLink } from '@angular/router';
     imports: [RouterLink],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NavbarComponent {}
+export class NavbarComponent {
+
+  private router = inject(Router);
+
+  authService = inject(AuthService);
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/home']);
+  }
+
+}

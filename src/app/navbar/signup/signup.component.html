@@ -1,3 +1,92 @@
-<div class="container">
-  <h1>This is the sign up page</h1>
+<div class="container auth-container">
+  <div class="box">
+    <h1 class="title is-4">Sign up</h1>
+
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <div class="field">
+        <label class="label">Username</label>
+        <div class="control">
+          <input
+            class="input"
+            type="text"
+            placeholder="Username"
+            formControlName="username"
+            autocomplete="username"
+          />
+          @if (usernameControl.invalid && (usernameControl.dirty || usernameControl.touched)) {
+            <span class="help is-danger">Username must be at least <strong>3 characters</strong></span>
+          }
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Email</label>
+        <div class="control">
+          <input
+            class="input"
+            type="email"
+            placeholder="you@example.com"
+            formControlName="email"
+            autocomplete="email"
+          />
+          @if (emailControl.invalid && (emailControl.dirty || emailControl.touched)) {
+            <span class="help is-danger">A valid email is <strong>required</strong></span>
+          }
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Password</label>
+        <div class="control">
+          <input
+            class="input"
+            type="password"
+            placeholder="Password"
+            formControlName="password"
+            autocomplete="new-password"
+          />
+          @if (passwordControl.invalid && (passwordControl.dirty || passwordControl.touched)) {
+            <span class="help is-danger">Password must be at least <strong>8 characters</strong></span>
+          }
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Confirm password</label>
+        <div class="control">
+          <input
+            class="input"
+            type="password"
+            placeholder="Confirm password"
+            formControlName="confirmPassword"
+            autocomplete="new-password"
+          />
+          @if (signupForm.hasError('passwordsMismatch') && (confirmPasswordControl.dirty || confirmPasswordControl.touched)) {
+            <span class="help is-danger">Passwords do not <strong>match</strong></span>
+          }
+        </div>
+      </div>
+
+      @if (errorMessage(); as message) {
+        <div class="notification is-danger is-light">{{ message }}</div>
+      }
+
+      <div class="field">
+        <div class="control">
+          <button
+            class="button is-primary"
+            type="submit"
+            [class.is-loading]="submitting()"
+            [disabled]="signupForm.invalid || submitting()"
+          >
+            Sign up
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <p class="has-text-grey">
+      Already have an account? <a routerLink="/login">Log in</a>
+    </p>
+  </div>
 </div>
