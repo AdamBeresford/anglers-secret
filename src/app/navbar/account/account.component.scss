@@ -1,4 +1,7 @@
+// Deliberately avoids Bulma's .container class: the global override in
+// main-styles.scss centres it as a flex row, which only suits single-box pages.
 .account-container {
   max-width: 640px;
-  margin-top: 3rem;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
 }

@@ -1,5 +1,11 @@
+// See account.component.scss — Bulma's .container is globally restyled as a
+// centring flex row, which does not suit a long scrolling document.
 .privacy-container {
   max-width: 720px;
-  margin-top: 3rem;
-  padding-bottom: 4rem;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+
+  .title {
+    margin-top: 2rem;
+  }
 }
