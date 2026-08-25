@@ -20,7 +20,9 @@ const userSchema = new mongoose.Schema(
     },
     password: { type: String, required: true },
     // Tracked so dormant accounts can be identified for the retention policy
-    lastLoginAt: { type: Date }
+    lastLoginAt: { type: Date },
+    // Fish species names chosen on the favourites page, capped at 4 by the API
+    favouriteFish: { type: [String], default: [] }
   },
   { timestamps: true }
 );

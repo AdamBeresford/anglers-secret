@@ -43,7 +43,7 @@
 
         <div class="card-content fish-content-container">
           <div class="content">
-            @for (fish of fishList; track fish.name) {
+            @for (fish of fishList(); track fish.name) {
               <div class="fish-content">
                 <img [src]="'../../assets/' + fish.image" [alt]="fish.name" />
                 <span

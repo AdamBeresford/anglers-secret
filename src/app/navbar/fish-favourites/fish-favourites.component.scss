@@ -35,3 +35,24 @@ select[multiple] {
   margin-top: 0.5rem;
 }
 
+.selection-hint {
+  margin-bottom: 0.75rem;
+}
+
+.save-message {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  color: #2e7d32;
+
+  &.is-error {
+    color: #c62828;
+  }
+}
+
+.save-area {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+

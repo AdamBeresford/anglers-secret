@@ -194,8 +194,39 @@ app.get('/api/account/export', requireAuth, (req, res) => {
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
       lastLoginAt: user.lastLoginAt ?? null,
+      favouriteFish: user.favouriteFish ?? [],
     },
   });
+});
+
+// FAVOURITES — the fish species chosen on the favourites page, kept per account
+const MAX_FAVOURITE_FISH = 4;
+
+app.get('/api/account/favourites', requireAuth, (req, res) => {
+  res.json({ favourites: req.user.favouriteFish ?? [] });
+});
+
+app.put('/api/account/favourites', requireAuth, async (req, res) => {
+  try {
+    const favourites = req.body?.favourites;
+
+    const isValid = Array.isArray(favourites)
+      && favourites.length <= MAX_FAVOURITE_FISH
+      && favourites.every((f) => typeof f === 'string' && f.length > 0 && f.length <= 40)
+      && new Set(favourites).size === favourites.length;
+
+    if (!isValid) {
+      return res.status(400).json({ message: `Favourites must be up to ${MAX_FAVOURITE_FISH} unique fish names` });
+    }
+
+    req.user.favouriteFish = favourites;
+    await req.user.save();
+
+    res.json({ favourites: req.user.favouriteFish });
+  } catch (error) {
+    logError('Saving favourites failed', error);
+    res.status(500).json({ message: 'An error occurred' });
+  }
 });
 
 // UK GDPR Art 17 — erasure. Requires the current password so that a stolen

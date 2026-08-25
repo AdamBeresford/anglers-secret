@@ -5,6 +5,10 @@
     </header>
 
     <div class="card-content">
+      <p class="selection-hint has-text-grey">
+        Choose up to {{ maxSelection }} fish to follow on the weather tracker.
+      </p>
+
       <mat-selection-list>
         @for (fish of fishList; track fish.name) {
           <mat-list-option
@@ -21,11 +25,37 @@
         }
       </mat-selection-list>
 
-      @if (selectedFish.length === maxSelection) {
+      @if (fishFavouritesService.selectedFish().length === maxSelection) {
         <p class="limit-warning">
-          You've selected the maximum of 4 fish.
+          You've selected the maximum of {{ maxSelection }} fish.
         </p>
       }
+
+      @if (saveMessage(); as message) {
+        <p class="save-message" [class.is-error]="message.isError">{{ message.text }}</p>
+      }
+
+      <div class="save-area">
+        @if (authService.isLoggedIn()) {
+          <button
+            class="button is-primary"
+            type="button"
+            [class.is-loading]="saving()"
+            [disabled]="!fishFavouritesService.hasUnsavedChanges() || saving()"
+            (click)="saveFavourites()"
+          >
+            <strong>Save favourites</strong>
+          </button>
+          @if (!fishFavouritesService.hasUnsavedChanges() && !saveMessage()) {
+            <span class="has-text-grey is-size-7">All changes saved</span>
+          }
+        } @else {
+          <p class="has-text-grey is-size-7">
+            <a routerLink="/login">Log in</a> or <a routerLink="/signup">sign up</a>
+            to save your favourites for next time.
+          </p>
+        }
+      </div>
     </div>
   </div>
 </div>

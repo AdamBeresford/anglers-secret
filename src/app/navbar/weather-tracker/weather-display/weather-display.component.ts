@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { WeatherTrackingService } from '../services/weather-tracking.service';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { FishStabilityService } from '../services/fish-stability.service';
-import { FishDisplayItem } from '../../fish-favourites/models/fish-display-item.model';
 import { FishFavouritesService } from '../../fish-favourites/services/fish-favourites.service';
 import { FishSpecies } from '../models/fish.model';
 
@@ -23,7 +22,8 @@ export class WeatherDisplayComponent {
   public fishStabilityService = inject(FishStabilityService);
   public fishFavouritesService = inject(FishFavouritesService);
 
-  fishList: FishDisplayItem[] = this.fishFavouritesService.selectedFish();
+  // Read reactively so favourites loaded from the account after construction still appear
+  fishList = this.fishFavouritesService.selectedFish;
 
   getStabilityLabel(status: 'good' | 'caution' | 'poor'): string {
     switch (status) {
