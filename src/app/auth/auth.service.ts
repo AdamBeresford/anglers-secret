@@ -13,6 +13,8 @@ export class AuthService {
   private static readonly SIGNUP_PATH = '/api/auth/signup';
   private static readonly LOGIN_PATH = '/api/auth/login';
   private static readonly ME_PATH = '/api/auth/me';
+  private static readonly EXPORT_PATH = '/api/account/export';
+  private static readonly ACCOUNT_PATH = '/api/account';
 
   private http = inject(HttpClient);
 
@@ -42,6 +44,16 @@ export class AuthService {
   logout() {
     localStorage.removeItem(TOKEN_STORAGE_KEY);
     this.currentUser.set(null);
+  }
+
+  exportMyData(): Observable<unknown> {
+    return this.http.get<unknown>(AuthService.EXPORT_PATH);
+  }
+
+  deleteAccount(password: string): Observable<{ message: string }> {
+    return this.http
+      .delete<{ message: string }>(AuthService.ACCOUNT_PATH, { body: { password } })
+      .pipe(tap(() => this.logout()));
   }
 
   private startSession(response: AuthResponse) {

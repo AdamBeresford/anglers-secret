@@ -180,6 +180,44 @@ app.get('/api/auth/me', requireAuth, (req, res) => {
   res.json({ user: toPublicUser(req.user) });
 });
 
+// UK GDPR Art 15/20 — everything held about the requester, in a portable format.
+// Deliberately excludes the password hash, which is a credential rather than
+// information about the user.
+app.get('/api/account/export', requireAuth, (req, res) => {
+  const user = req.user;
+  res.json({
+    exportedAt: new Date().toISOString(),
+    account: {
+      id: user._id,
+      username: user.username,
+      email: user.email,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+      lastLoginAt: user.lastLoginAt ?? null,
+    },
+  });
+});
+
+// UK GDPR Art 17 — erasure. Requires the current password so that a stolen
+// token alone cannot destroy an account.
+app.delete('/api/account', requireAuth, async (req, res) => {
+  try {
+    const password = req.body?.password || '';
+    if (!password) {
+      return res.status(400).json({ message: 'Your password is required to delete your account' });
+    }
+
+    const isMatch = await bcrypt.compare(password, req.user.password);
+    if (!isMatch) return res.status(403).json({ message: 'Password is incorrect' });
+
+    await User.findByIdAndDelete(req.user._id);
+    res.json({ message: 'Your account and all associated data have been deleted' });
+  } catch (error) {
+    logError('Account deletion failed', error);
+    res.status(500).json({ message: 'An error occurred' });
+  }
+});
+
 app.listen(config.port, () => {
   console.log(`Server running at http://localhost:${config.port}`);
 });

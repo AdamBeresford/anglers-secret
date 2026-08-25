@@ -11,7 +11,7 @@
     <div class="navbar-end">
       <div class="navbar-item">
         @if (authService.currentUser(); as user) {
-          <span class="navbar-item">Welcome, <strong>&nbsp;{{ user.username }}</strong></span>
+          <a class="navbar-item" routerLink="/account">Welcome,&nbsp;<strong>{{ user.username }}</strong></a>
           <div class="buttons">
             <button class="button is-light" type="button" (click)="logout()">Log out</button>
           </div>

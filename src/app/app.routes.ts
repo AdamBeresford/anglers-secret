@@ -4,6 +4,8 @@ import { WeatherTrackerComponent } from './navbar/weather-tracker/weather-tracke
 import { SignupComponent } from './navbar/signup/signup.component';
 import { LoginComponent } from './navbar/login/login.component';
 import { FishFavouritesComponent } from './navbar/fish-favourites/fish-favourites.component';
+import { AccountComponent } from './navbar/account/account.component';
+import { authGuard } from './auth/auth.guard';
 
 export const APP_ROUTES: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -12,4 +14,5 @@ export const APP_ROUTES: Routes = [
   { path: 'fish-favourites', component: FishFavouritesComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'account', component: AccountComponent, canActivate: [authGuard] },
 ];
