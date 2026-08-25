@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 import { WeatherTrackerFormComponent } from './weather-tracker-form.component';
 
@@ -9,6 +11,7 @@ describe('WeatherTrackerFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [WeatherTrackerFormComponent],
+      providers: [provideHttpClient(), provideHttpClientTesting()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(WeatherTrackerFormComponent);
