@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.config.json",
     "server": "node backend/server.js",
+    "prune-dormant": "node backend/scripts/prune-dormant-accounts.js",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",

@@ -1,0 +1,82 @@
+<div class="container privacy-container content">
+  <h1 class="title is-4">Privacy notice</h1>
+  <p class="has-text-grey is-size-7">Last updated: {{ lastUpdated }}</p>
+
+  <p>
+    This notice explains what Anglers Secret stores about you and what you can do
+    about it. It is written to meet our obligations under the UK GDPR and the Data
+    Protection Act 2018.
+  </p>
+
+  <h2 class="title is-5">Who is responsible</h2>
+  <p>
+    Anglers Secret is run by an individual as a hobby project. The data controller
+    can be contacted at <strong>[ADD YOUR CONTACT EMAIL]</strong>.
+  </p>
+
+  <h2 class="title is-5">What we store</h2>
+  <ul>
+    <li>Your <strong>username</strong> and <strong>email address</strong>, which you provide at signup.</li>
+    <li>Your <strong>password</strong>, stored only as a bcrypt hash. We cannot read it or recover it.</li>
+    <li>The <strong>dates</strong> your account was created, last updated, and last signed in.</li>
+  </ul>
+  <p>
+    We do not use analytics, advertising, or third-party trackers, and we do not
+    build a profile of you.
+  </p>
+
+  <h2 class="title is-5">Why we store it, and our lawful basis</h2>
+  <p>
+    We hold this data to provide you with an account, which is our
+    <em>performance of a contract</em> basis under Article 6(1)(b). The email address
+    specifically lets us identify your account and contact you about it, including
+    resetting your password or telling you about a security incident. We will not send
+    you marketing.
+  </p>
+
+  <h2 class="title is-5">Weather searches</h2>
+  <p>
+    When you search for fishing conditions, the location you enter is sent to
+    <a href="https://www.weatherapi.com" target="_blank" rel="noopener noreferrer">WeatherAPI</a>
+    to retrieve the forecast. Those searches are not linked to your account or stored
+    by us. Please avoid entering a precise home address.
+  </p>
+
+  <h2 class="title is-5">How long we keep it</h2>
+  <p>
+    Your data is kept for as long as your account exists. Accounts that have not been
+    signed in to for {{ dormantAccountMonths }} months are treated as dormant and
+    deleted. If you delete your account yourself, it is removed immediately and
+    permanently.
+  </p>
+
+  <h2 class="title is-5">How it is protected</h2>
+  <ul>
+    <li>Passwords are hashed with bcrypt and never stored or logged in readable form.</li>
+    <li>Sign-in attempts are rate limited to frustrate brute-force guessing.</li>
+    <li>Secrets are held in server environment configuration, never in the source code.</li>
+    <li>Error logs record messages only, so your details do not end up in them.</li>
+  </ul>
+
+  <h2 class="title is-5">Your rights</h2>
+  <p>You have the right to:</p>
+  <ul>
+    <li><strong>Access and portability</strong> — download everything we hold from your <a routerLink="/account">account page</a>.</li>
+    <li><strong>Erasure</strong> — delete your account and its data from that same page.</li>
+    <li><strong>Rectification</strong> — ask us to correct anything inaccurate, using the contact address above.</li>
+    <li><strong>Objection and restriction</strong> — ask us to stop or limit how we use your data.</li>
+  </ul>
+  <p>
+    If you are unhappy with how we have handled your data you can complain to the
+    Information Commissioner's Office at
+    <a href="https://ico.org.uk" target="_blank" rel="noopener noreferrer">ico.org.uk</a>.
+  </p>
+
+  <h2 class="title is-5">Browser storage</h2>
+  <p>
+    When you sign in we store a single sign-in token in your browser's local storage
+    so you stay signed in. It is strictly necessary to provide the service you asked
+    for, so it does not require a cookie consent banner under PECR. Signing out
+    removes it.
+  </p>
+</div>
