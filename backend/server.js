@@ -6,46 +6,52 @@ const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+const config = require('./config');
 const User = require('./models/User');
 
 const app = express();
-const port = 3000;
-
-// Override via environment in production — the fallback is for local development only
-const JWT_SECRET = process.env.JWT_SECRET || 'anglers-secret-dev-key';
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/anglersSecret';
 
 app.use(cors());
 app.use(bodyParser.json());
 
-mongoose.connect(MONGO_URI)
+mongoose.connect(config.mongoUri)
   .then(() => console.log('✅ MongoDB connected'))
-  .catch(err => console.error('❌ MongoDB connection error:', err));
+  .catch(err => console.error('❌ MongoDB connection error:', err.message));
 
-app.get('/api/weather/current', async (req, res) => {
-  const location = req.query.location;
+// Guards the weather routes so a missing key fails clearly rather than as a 500 from upstream
+function requireWeatherKey(req, res, next) {
+  if (!config.weatherApiKey) {
+    return res.status(503).json({ message: 'Weather service is not configured' });
+  }
+  next();
+}
+
+app.get('/api/weather/current', requireWeatherKey, async (req, res) => {
   try {
-    const response = await axios.get(`http://api.weatherapi.com/v1/current.json?key=45b8474fde374c41ac3134812232811&q=${location}&aqi=no`);
+    const response = await axios.get('https://api.weatherapi.com/v1/current.json', {
+      params: { key: config.weatherApiKey, q: req.query.location, aqi: 'no' }
+    });
     res.json(response.data);
   } catch (error) {
+    console.error('Current weather lookup failed:', error.message);
     res.status(500).json({ message: 'An error occurred' });
   }
 });
 
-app.get('/api/weather/historical', async (req, res) => {
-    const location = req.query.location;
-    const date = req.query.date;
-    try {
-        const response = await axios.get(`http://api.weatherapi.com/v1/history.json?key=45b8474fde374c41ac3134812232811&q=${location}&dt=${date}`)
-        res.json(response.data);
-    } catch (error) {
-        res.status(500).json({ message: 'An error occurred' });
-    }
+app.get('/api/weather/historical', requireWeatherKey, async (req, res) => {
+  try {
+    const response = await axios.get('https://api.weatherapi.com/v1/history.json', {
+      params: { key: config.weatherApiKey, q: req.query.location, dt: req.query.date }
+    });
+    res.json(response.data);
+  } catch (error) {
+    console.error('Historical weather lookup failed:', error.message);
+    res.status(500).json({ message: 'An error occurred' });
+  }
 });
 
 function createToken(user) {
-  return jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+  return jwt.sign({ userId: user._id }, config.jwtSecret, { expiresIn: config.jwtExpiresIn });
 }
 
 function toPublicUser(user) {
@@ -59,7 +65,7 @@ async function requireAuth(req, res, next) {
   if (!token) return res.status(401).json({ message: 'Not authenticated' });
 
   try {
-    const payload = jwt.verify(token, JWT_SECRET);
+    const payload = jwt.verify(token, config.jwtSecret);
     const user = await User.findById(payload.userId);
     if (!user) return res.status(401).json({ message: 'Not authenticated' });
     req.user = user;
@@ -134,6 +140,6 @@ app.get('/api/auth/me', requireAuth, (req, res) => {
   res.json({ user: toPublicUser(req.user) });
 });
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+app.listen(config.port, () => {
+  console.log(`Server running at http://localhost:${config.port}`);
 });
