@@ -1,4 +1,52 @@
-label {
-  margin-bottom: 0px !important;
-  margin-top: 10px
+.tracker-form-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 1.5rem;
+}
+
+.tracker-card {
+  width: 100%;
+  max-width: 520px;
+}
+
+.tracker-title {
+  margin-bottom: 0.75rem;
+}
+
+.tracker-description {
+  color: #4a4a4a;
+  margin-bottom: 1.25rem;
+}
+
+.favourites-summary {
+  background: #f6fbf9;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.25rem;
+
+  &.no-fish {
+    background: #fffbe6;
+  }
+
+  .favourite-icons {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+
+    img {
+      height: 44px;
+      width: 44px;
+    }
+  }
+
+  .favourites-caption {
+    font-size: 0.85rem;
+    margin: 0;
+  }
+}
+
+.label {
+  margin-bottom: 0.25rem;
 }

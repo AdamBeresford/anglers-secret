@@ -1,15 +1,17 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { WeatherTrackingService } from '../services/weather-tracking.service';
 import { FormBuilder, Validators, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { FishStabilityService } from '../services/fish-stability.service';
+import { FishFavouritesService } from '../../fish-favourites/services/fish-favourites.service';
 
 @Component({
     selector: 'app-weather-tracker-form',
     templateUrl: './weather-tracker-form.component.html',
     styleUrl: './weather-tracker-form.component.scss',
     standalone: true,
-    imports: [ReactiveFormsModule],
+    imports: [ReactiveFormsModule, RouterLink],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WeatherTrackerFormComponent implements OnInit {
@@ -17,6 +19,9 @@ export class WeatherTrackerFormComponent implements OnInit {
   private fb = inject(FormBuilder);
   private weatherService = inject(WeatherTrackingService);
   private fishStabilityService = inject(FishStabilityService);
+
+  fishFavouritesService = inject(FishFavouritesService);
+  loading = this.weatherService.loadingWeatherData;
 
   weatherTrackerForm: FormGroup = new FormGroup({});
   locationControl: FormControl = new FormControl('', Validators.required);
@@ -33,10 +38,10 @@ export class WeatherTrackerFormComponent implements OnInit {
 
   onSubmit() {
     this.weatherService.loadingWeatherData.set(true);
-  
+
     const location = this.weatherTrackerForm.get('location')?.value;
     if (!location) return;
-  
+
     this.weatherService.getMultipleHistoricalWeather(location, 5).pipe(
       switchMap(() => this.weatherService.getCurrentWeather(location)),
       switchMap(() => this.fishStabilityService.getAllFishStability())
@@ -52,5 +57,5 @@ export class WeatherTrackerFormComponent implements OnInit {
       }
     });
   }
-  
+
 }

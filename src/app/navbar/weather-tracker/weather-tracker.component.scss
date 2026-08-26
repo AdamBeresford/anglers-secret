@@ -1,0 +1,14 @@
+// Pass the shell's height down so the form page can centre itself in the viewport
+:host {
+  display: block;
+  height: 100%;
+}
+
+.weather-tracker-container {
+  height: 100%;
+}
+
+app-weather-tracker-form {
+  display: block;
+  height: 100%;
+}

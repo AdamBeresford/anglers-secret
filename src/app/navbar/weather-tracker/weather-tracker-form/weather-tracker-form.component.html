@@ -1,21 +1,64 @@
-<div class="container">
-  <form [formGroup]="weatherTrackerForm" (ngSubmit)="onSubmit()">
-    <div class="field">
-      <label class="label">Location</label>
-      <div class="control">
-        <input
-          class="input"
-          type="text"
-          placeholder="Post Code"
-          formControlName="location"
-        />
+<div class="tracker-form-page">
+  <div class="card tracker-card">
+    <div class="card-content">
+      <h1 class="title is-4 tracker-title">Check the fishing conditions</h1>
+      <p class="tracker-description">
+        Enter the postcode of the water you plan to fish. We'll compare today's
+        weather with the past five days to judge how settled conditions are —
+        and how likely your fish are to be biting.
+      </p>
+
+      @if (fishFavouritesService.selectedFish(); as selectedFish) {
+        @if (selectedFish.length > 0) {
+          <div class="favourites-summary">
+            <div class="favourite-icons">
+              @for (fish of selectedFish; track fish.name) {
+                <img [src]="'../../assets/' + fish.image" [alt]="fish.name" [title]="fish.name" />
+              }
+            </div>
+            <p class="favourites-caption has-text-grey">
+              Forecasting for your {{ selectedFish.length }} favourite fish —
+              <a routerLink="/fish-favourites">change selection</a>
+            </p>
+          </div>
+        } @else {
+          <div class="favourites-summary no-fish">
+            <p class="favourites-caption">
+              <strong>Tip:</strong> pick at least one favourite fish first to get
+              a biting forecast alongside the weather.
+              <a routerLink="/fish-favourites">Choose your fish &rarr;</a>
+            </p>
+          </div>
+        }
+      }
+
+      <form [formGroup]="weatherTrackerForm" (ngSubmit)="onSubmit()">
+        <label class="label" for="location-input">Location</label>
+        <div class="field has-addons">
+          <div class="control is-expanded">
+            <input
+              id="location-input"
+              class="input"
+              type="text"
+              placeholder="e.g. YO1 7HH"
+              formControlName="location"
+            />
+          </div>
+          <div class="control">
+            <button
+              class="button is-primary"
+              type="submit"
+              [class.is-loading]="loading()"
+              [disabled]="weatherTrackerForm.invalid || loading()"
+            >
+              <strong>Search</strong>
+            </button>
+          </div>
+        </div>
         @if (locationControl.invalid && (locationControl.dirty || locationControl.touched)) {
           <span class="help is-danger">Location is <strong>required</strong></span>
         }
-      </div>
+      </form>
     </div>
-    <div class="control">
-      <button class="button is-primary" type="submit" [disabled]="weatherTrackerForm.invalid">Search</button>
-    </div>
-  </form>
+  </div>
 </div>
