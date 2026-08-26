@@ -1,9 +1,9 @@
 <div class="home-container">
   <section class="hero-section">
     @if (authService.currentUser(); as user) {
-      <h1 class="title is-2 hero-title">Welcome back, {{ user.username }}</h1>
+      <h1 class="title is-3 hero-title">Welcome back, {{ user.username }}</h1>
     } @else {
-      <h1 class="title is-2 hero-title">The Angler's Secret</h1>
+      <h1 class="title is-3 hero-title">The Angler's Secret</h1>
     }
     <p class="subtitle hero-subtitle">
       Know how the fish are biting before you leave the house. We read the last
@@ -48,7 +48,7 @@
   </section>
 
   <section class="how-it-works">
-    <h2 class="title is-4 how-title">How it works</h2>
+    <h2 class="title is-5 how-title">How it works</h2>
     <div class="steps">
       <div class="step">
         <span class="step-number">1</span>

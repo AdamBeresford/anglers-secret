@@ -1,7 +1,10 @@
-<div class="fish-favourites-container">
-  <div class="card">
+<div class="fish-favourites-page">
+  <div class="card favourites-card">
     <header class="card-header">
       <p class="card-header-title">Fish Favourites</p>
+      <p class="selection-count">
+        {{ fishFavouritesService.selectedFish().length }} / {{ maxSelection }} selected
+      </p>
     </header>
 
     <div class="card-content">
@@ -9,31 +12,22 @@
         Choose up to {{ maxSelection }} fish to follow on the weather tracker.
       </p>
 
-      <mat-selection-list>
+      <div class="fish-grid" role="listbox" aria-label="Fish species" aria-multiselectable="true">
         @for (fish of fishList; track fish.name) {
-          <mat-list-option
-            [value]="fish"
-            [selected]="isSelected(fish)"
+          <button
+            type="button"
+            class="fish-tile"
+            role="option"
+            [class.is-selected]="isSelected(fish)"
             [disabled]="isDisabled(fish)"
+            [attr.aria-selected]="isSelected(fish)"
             (click)="toggleSelection(fish)"
           >
-            <div class="fish-entry">
-              <img [src]="'../../assets/' + fish.image" [alt]="fish.name" />
-              <span class="fish-name">{{ fish.name }}</span>
-            </div>
-          </mat-list-option>
+            <img [src]="'../../assets/' + fish.image" [alt]="''" />
+            <span class="fish-name">{{ fish.name }}</span>
+          </button>
         }
-      </mat-selection-list>
-
-      @if (fishFavouritesService.selectedFish().length === maxSelection) {
-        <p class="limit-warning">
-          You've selected the maximum of {{ maxSelection }} fish.
-        </p>
-      }
-
-      @if (saveMessage(); as message) {
-        <p class="save-message" [class.is-error]="message.isError">{{ message.text }}</p>
-      }
+      </div>
 
       <div class="save-area">
         @if (authService.isLoggedIn()) {
@@ -46,7 +40,9 @@
           >
             <strong>Save favourites</strong>
           </button>
-          @if (!fishFavouritesService.hasUnsavedChanges() && !saveMessage()) {
+          @if (saveMessage(); as message) {
+            <span class="save-message" [class.is-error]="message.isError">{{ message.text }}</span>
+          } @else if (!fishFavouritesService.hasUnsavedChanges()) {
             <span class="has-text-grey is-size-7">All changes saved</span>
           }
         } @else {

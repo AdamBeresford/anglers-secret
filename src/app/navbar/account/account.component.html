@@ -2,7 +2,7 @@
   <h1 class="title is-4">Your account</h1>
 
   @if (currentUser(); as user) {
-    <div class="box">
+    <div class="box profile-box">
       <div class="field">
         <label class="label">Username</label>
         <p>{{ user.username }}</p>
@@ -18,57 +18,59 @@
     <div class="notification is-danger is-light">{{ message }}</div>
   }
 
-  <div class="box">
-    <h2 class="title is-5">Your data</h2>
-    <p class="mb-3 has-text-grey">
-      Download everything stored about you as a JSON file.
-    </p>
-    <button class="button is-info is-light" type="button" (click)="downloadMyData()">
-      Download my data
-    </button>
-  </div>
-
-  <div class="box">
-    <h2 class="title is-5">Delete your account</h2>
-    <p class="mb-3 has-text-grey">
-      This permanently erases your account and everything stored with it. It cannot be undone.
-    </p>
-
-    @if (confirmingDelete()) {
-      <div class="field">
-        <label class="label">Confirm your password</label>
-        <div class="control">
-          <input
-            class="input"
-            type="password"
-            placeholder="Current password"
-            autocomplete="current-password"
-            [formControl]="deletePasswordControl"
-          />
-        </div>
-      </div>
-      <div class="buttons">
-        <button
-          class="button is-danger"
-          type="button"
-          [class.is-loading]="deleting()"
-          [disabled]="deletePasswordControl.invalid || deleting()"
-          (click)="confirmDelete()"
-        >
-          Permanently delete my account
-        </button>
-        <button class="button is-light" type="button" [disabled]="deleting()" (click)="cancelDelete()">
-          Cancel
-        </button>
-      </div>
-    } @else {
-      <button class="button is-danger is-light" type="button" (click)="startDelete()">
-        Delete my account
+  <div class="action-boxes">
+    <div class="box">
+      <h2 class="title is-5">Your data</h2>
+      <p class="has-text-grey">
+        Download everything stored about you as a JSON file.
+      </p>
+      <button class="button is-info is-light" type="button" (click)="downloadMyData()">
+        Download my data
       </button>
-    }
+    </div>
+
+    <div class="box">
+      <h2 class="title is-5">Delete your account</h2>
+      <p class="has-text-grey">
+        This permanently erases your account and everything stored with it. It cannot be undone.
+      </p>
+
+      @if (confirmingDelete()) {
+        <div class="field">
+          <label class="label">Confirm your password</label>
+          <div class="control">
+            <input
+              class="input"
+              type="password"
+              placeholder="Current password"
+              autocomplete="current-password"
+              [formControl]="deletePasswordControl"
+            />
+          </div>
+        </div>
+        <div class="buttons">
+          <button
+            class="button is-danger"
+            type="button"
+            [class.is-loading]="deleting()"
+            [disabled]="deletePasswordControl.invalid || deleting()"
+            (click)="confirmDelete()"
+          >
+            Permanently delete my account
+          </button>
+          <button class="button is-light" type="button" [disabled]="deleting()" (click)="cancelDelete()">
+            Cancel
+          </button>
+        </div>
+      } @else {
+        <button class="button is-danger is-light" type="button" (click)="startDelete()">
+          Delete my account
+        </button>
+      }
+    </div>
   </div>
 
-  <p class="has-text-grey is-size-7">
+  <p class="has-text-grey is-size-7 privacy-footnote">
     See our <a routerLink="/privacy">privacy notice</a> for how your data is handled.
   </p>
 </div>

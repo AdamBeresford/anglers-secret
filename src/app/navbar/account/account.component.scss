@@ -1,7 +1,57 @@
 // Deliberately avoids Bulma's .container class: the global override in
 // main-styles.scss centres it as a flex row, which only suits single-box pages.
+:host {
+  display: block;
+  height: 100%;
+}
+
 .account-container {
-  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  max-width: 760px;
   margin: 0 auto;
-  padding: 2rem 1.5rem 4rem;
+  padding: 1rem 1.5rem;
+
+  > .title {
+    margin-bottom: 1rem;
+  }
+
+  .box {
+    margin-bottom: 1rem;
+    padding: 1rem 1.25rem;
+
+    .title {
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      margin-bottom: 0.75rem !important;
+    }
+  }
+}
+
+// The data and deletion sections sit side by side to keep the page in view
+.action-boxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+
+  .box {
+    margin-bottom: 0;
+  }
+}
+
+.profile-box {
+  display: flex;
+  gap: 3rem;
+
+  .field {
+    margin-bottom: 0;
+  }
+}
+
+.privacy-footnote {
+  margin-top: 1rem;
 }

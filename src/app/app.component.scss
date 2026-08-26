@@ -1,0 +1,15 @@
+// Viewport-height shell: the navbar keeps its natural height and each routed
+// page lays itself out inside the remaining space. Pages are sized to fit it
+// without scrolling; overflow-y is a safety net for short viewports and the
+// long-form privacy notice.
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+}
+
+.app-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}

@@ -1,4 +1,25 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
 .auth-container {
   max-width: 420px;
-  margin-top: 3rem;
+}
+
+// Keep the taller signup form comfortably inside the viewport
+.box {
+  padding: 1.25rem 1.5rem;
+
+  .field:not(:last-child) {
+    margin-bottom: 0.6rem;
+  }
+
+  .label {
+    margin-bottom: 0.25rem;
+  }
+
+  p {
+    margin-top: 0.5rem;
+  }
 }

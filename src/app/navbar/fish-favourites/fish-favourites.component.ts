@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FishDisplayItem, fishList } from './models/fish-display-item.model';
-import { MatListModule } from '@angular/material/list';
 import { RouterLink } from '@angular/router';
 import { FishFavouritesService } from './services/fish-favourites.service';
 import { AuthService } from '../../auth/auth.service';
@@ -11,7 +10,6 @@ import { AuthService } from '../../auth/auth.service';
   styleUrl: './fish-favourites.component.scss',
   standalone: true,
   imports: [
-    MatListModule,
     RouterLink
   ],
   changeDetection: ChangeDetectionStrategy.OnPush

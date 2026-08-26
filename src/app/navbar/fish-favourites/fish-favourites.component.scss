@@ -1,51 +1,80 @@
-.fish-favourites-container {
+:host {
+  display: block;
+  height: 100%;
+}
+
+.fish-favourites-page {
   display: flex;
   justify-content: center;
-  padding: 20px;
-
-  .fish-entry {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-  
-  .fish-name {
-    font-weight: bold;
-    font-size: 1.05rem;
-    color: #333;
-  }
-
-  img {
-    height: 60px;
-    width: 60px;
-  }
+  align-items: center;
+  height: 100%;
+  padding: 1rem 1.5rem;
 }
 
-select[multiple] {
+.favourites-card {
   width: 100%;
-  max-width: 300px;
-  padding: 0.5rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  max-width: 720px;
 }
 
-.limit-warning {
-  color: #c62828;
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
+.selection-count {
+  display: flex;
+  align-items: center;
+  padding-right: 1rem;
+  font-size: 0.85rem;
+  color: #7a7a7a;
 }
 
 .selection-hint {
   margin-bottom: 0.75rem;
+  font-size: 0.9rem;
 }
 
-.save-message {
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
-  color: #2e7d32;
+.fish-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.6rem;
 
-  &.is-error {
-    color: #c62828;
+  @media (max-width: 700px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.fish-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.6rem 0.25rem;
+  background: #fafafa;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.1s ease, background-color 0.1s ease;
+
+  img {
+    height: 44px;
+    width: 44px;
+  }
+
+  .fish-name {
+    font-weight: bold;
+    font-size: 0.8rem;
+    color: #363636;
+  }
+
+  &:hover:not(:disabled) {
+    background: #f0faf6;
+  }
+
+  &.is-selected {
+    background: #e7fbe7;
+    border-color: #27d7a1;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
   }
 }
 
@@ -56,3 +85,11 @@ select[multiple] {
   margin-top: 1rem;
 }
 
+.save-message {
+  font-size: 0.85rem;
+  color: #2e7d32;
+
+  &.is-error {
+    color: #c62828;
+  }
+}
