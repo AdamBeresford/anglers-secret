@@ -17,16 +17,16 @@
               }
             </div>
             <p class="favourites-caption has-text-grey">
-              Forecasting for your {{ selectedFish.length }} favourite fish —
-              <a routerLink="/fish-favourites">change selection</a>
+              Forecasting for your {{ selectedFish.length }} selected species —
+              <a routerLink="/species-select">change selection</a>
             </p>
           </div>
         } @else {
           <div class="favourites-summary no-fish">
             <p class="favourites-caption">
-              <strong>Tip:</strong> pick at least one favourite fish first to get
+              <strong>Tip:</strong> select at least one fish species first to get
               a biting forecast alongside the weather.
-              <a routerLink="/fish-favourites">Choose your fish &rarr;</a>
+              <a routerLink="/species-select">Choose your species &rarr;</a>
             </p>
           </div>
         }

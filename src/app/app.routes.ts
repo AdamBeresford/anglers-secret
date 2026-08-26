@@ -12,7 +12,9 @@ export const APP_ROUTES: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'weather-tracker', component: WeatherTrackerComponent },
-  { path: 'fish-favourites', component: FishFavouritesComponent },
+  { path: 'species-select', component: FishFavouritesComponent },
+  // Old name for the species select page, kept so existing bookmarks still work
+  { path: 'fish-favourites', redirectTo: '/species-select' },
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
   { path: 'account', component: AccountComponent, canActivate: [authGuard] },

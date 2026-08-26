@@ -45,11 +45,11 @@ export class FishFavouritesComponent {
     this.fishFavouritesService.saveFavourites().subscribe({
       next: () => {
         this.saving.set(false);
-        this.saveMessage.set({ text: 'Favourites saved to your account.', isError: false });
+        this.saveMessage.set({ text: 'Selection saved to your account.', isError: false });
       },
       error: () => {
         this.saving.set(false);
-        this.saveMessage.set({ text: 'Could not save your favourites. Please try again.', isError: true });
+        this.saveMessage.set({ text: 'Could not save your selection. Please try again.', isError: true });
       },
     });
   }

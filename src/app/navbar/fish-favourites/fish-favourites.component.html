@@ -1,7 +1,7 @@
 <div class="fish-favourites-page">
   <div class="card favourites-card">
     <header class="card-header">
-      <p class="card-header-title">Fish Favourites</p>
+      <p class="card-header-title">Species Select</p>
       <p class="selection-count">
         {{ fishFavouritesService.selectedFish().length }} / {{ maxSelection }} selected
       </p>
@@ -9,7 +9,7 @@
 
     <div class="card-content">
       <p class="selection-hint has-text-grey">
-        Choose up to {{ maxSelection }} fish to follow on the weather tracker.
+        Choose up to {{ maxSelection }} species to follow on the weather tracker.
       </p>
 
       <div class="fish-grid" role="listbox" aria-label="Fish species" aria-multiselectable="true">
@@ -38,7 +38,7 @@
             [disabled]="!fishFavouritesService.hasUnsavedChanges() || saving()"
             (click)="saveFavourites()"
           >
-            <strong>Save favourites</strong>
+            <strong>Save selection</strong>
           </button>
           @if (saveMessage(); as message) {
             <span class="save-message" [class.is-error]="message.isError">{{ message.text }}</span>
@@ -48,7 +48,7 @@
         } @else {
           <p class="has-text-grey is-size-7">
             <a routerLink="/login">Log in</a> or <a routerLink="/signup">sign up</a>
-            to save your favourites for next time.
+            to save your selection for next time.
           </p>
         }
       </div>
