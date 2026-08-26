@@ -30,11 +30,11 @@ export class WeatherDisplayComponent {
   getStabilityLabel(status: 'good' | 'caution' | 'poor'): string {
     switch (status) {
       case 'good':
-        return ' - Biting';
+        return 'Biting';
       case 'caution':
-        return ' - Cautious';
+        return 'Cautious';
       case 'poor':
-        return ' - Inactive';
+        return 'Inactive';
       default:
         return '';
     }

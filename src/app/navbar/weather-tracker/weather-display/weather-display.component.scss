@@ -87,21 +87,64 @@
   justify-content: center;
 }
 
-.fish-content-container {
+// The card stretches to match the weather card, so centre the tiles in the
+// leftover height and let them share the full width between them.
+.fish-stability-card .card-content {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  justify-content: center;
+  height: calc(100% - 48px); // header height
+}
+
+.fish-content-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+
+  &.single-column {
+    grid-template-columns: 1fr;
+  }
 
   .fish-content {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 10px;
+    padding: 0.5rem 0.75rem;
+    border-radius: 10px;
 
     img {
       height: 46px;
       width: 46px;
+      flex-shrink: 0;
     }
   }
+
+  .fish-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    min-width: 0;
+
+    .fish-title {
+      font-weight: bold;
+      font-size: 0.9rem;
+      color: #363636;
+    }
+  }
+}
+
+// Soft tint per status so each tile reads at a glance
+.tile-good {
+  background: #f2fcf2;
+}
+
+.tile-caution {
+  background: #fffdf2;
+}
+
+.tile-poor {
+  background: #fdf2f2;
 }
 
 .no-favourites {
@@ -111,11 +154,10 @@
 
 .fish-name {
   font-weight: bold;
-  font-size: 1rem;
-  padding: 3px 10px;
+  font-size: 0.75rem;
+  padding: 1px 8px;
   border-radius: 8px;
   display: inline-block;
-  min-width: 100px;
   text-align: center;
   white-space: nowrap;
 }

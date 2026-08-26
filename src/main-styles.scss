@@ -14,7 +14,9 @@ $light: #f8f8f8;
 $family-sans-serif: "Nunito", sans-serif;
 $primary: $green;
 
-$link: $turquoise;
+// Dark enough to read on both white cards and the green gradient background
+// (the previous turquoise all but disappeared against the gradient)
+$link: $dark-green;
 
 // Update some of Bulma's component variables
 
