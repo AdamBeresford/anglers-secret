@@ -12,6 +12,8 @@ export class CurrentWeather {
       lastUpdated: string;
       tempC: number;
       windMph: number;
+      windDir: string;
+      pressureMb: number;
       precipMm: number;
       cloudCover: number;
       uv: number;
@@ -30,6 +32,8 @@ export class CurrentWeather {
         lastUpdated: requestData.current.last_updated,
         tempC: requestData.current.temp_c,
         windMph: requestData.current.wind_mph,
+        windDir: requestData.current.wind_dir,
+        pressureMb: requestData.current.pressure_mb,
         precipMm: requestData.current.precip_mm,
         cloudCover: requestData.current.cloud,
         uv: requestData.current.uv,

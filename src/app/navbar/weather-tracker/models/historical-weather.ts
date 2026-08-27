@@ -17,18 +17,24 @@ export class HistoricalWeather {
         cloudCover: number;
         precipMm: number;
         windMph: number;
+        windDir: string;
+        pressureMb: number;
         humidity: number;
       };
       midday: {
         cloudCover: number;
         precipMm: number;
         windMph: number;
+        windDir: string;
+        pressureMb: number;
         humidity: number;
       };
       evening: {
         cloudCover: number;
         precipMm: number;
         windMph: number;
+        windDir: string;
+        pressureMb: number;
         humidity: number;
       };
     };
@@ -51,18 +57,24 @@ export class HistoricalWeather {
           cloudCover: requestData.forecast.forecastday[0].hour[7].cloud,
           precipMm: requestData.forecast.forecastday[0].hour[7].precip_mm,
           windMph: requestData.forecast.forecastday[0].hour[7].wind_mph,
+          windDir: requestData.forecast.forecastday[0].hour[7].wind_dir,
+          pressureMb: requestData.forecast.forecastday[0].hour[7].pressure_mb,
           humidity: requestData.forecast.forecastday[0].hour[7].humidity,
         },
         midday: {
           cloudCover: requestData.forecast.forecastday[0].hour[12].cloud,
           precipMm: requestData.forecast.forecastday[0].hour[12].precip_mm,
           windMph: requestData.forecast.forecastday[0].hour[12].wind_mph,
+          windDir: requestData.forecast.forecastday[0].hour[12].wind_dir,
+          pressureMb: requestData.forecast.forecastday[0].hour[12].pressure_mb,
           humidity: requestData.forecast.forecastday[0].hour[12].humidity,
         },
         evening: {
           cloudCover: requestData.forecast.forecastday[0].hour[18].cloud,
           precipMm: requestData.forecast.forecastday[0].hour[18].precip_mm,
           windMph: requestData.forecast.forecastday[0].hour[18].wind_mph,
+          windDir: requestData.forecast.forecastday[0].hour[18].wind_dir,
+          pressureMb: requestData.forecast.forecastday[0].hour[18].pressure_mb,
           humidity: requestData.forecast.forecastday[0].hour[18].humidity,
         },
       },
