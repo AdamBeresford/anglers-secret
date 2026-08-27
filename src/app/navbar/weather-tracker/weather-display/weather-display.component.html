@@ -50,10 +50,10 @@
       </div>
     }
 
-    @if (this.fishStabilityService.fishStability()) {
+    @if (fishActivityService.biteForecast()) {
       <div class="card summary-card fish-stability-card">
         <header class="card-header">
-          <p class="card-header-title fish-stability-header">Fish Stability</p>
+          <p class="card-header-title fish-stability-header">Bite Forecast</p>
         </header>
 
         <div class="card-content">
@@ -62,16 +62,16 @@
               @for (fish of fishList(); track fish.name) {
                 <div
                   class="fish-content"
-                  [ngClass]="'tile-' + (fishStabilityService.fishStability()?.[mapFishNameToSpecies(fish.name)] || 'caution')"
+                  [ngClass]="'tile-' + statusFor(fish.name)"
                 >
                   <img [src]="'../../assets/' + fish.image" [alt]="fish.name" />
                   <div class="fish-details">
                     <span class="fish-title">{{ fish.name }}</span>
                     <span
                       class="fish-name"
-                      [ngClass]="'stability-' + (fishStabilityService.fishStability()?.[mapFishNameToSpecies(fish.name)] || 'caution')"
+                      [ngClass]="'stability-' + statusFor(fish.name)"
                     >
-                      {{ getStabilityLabel(fishStabilityService.fishStability()?.[mapFishNameToSpecies(fish.name)] || 'caution') }}
+                      {{ labelFor(fish.name) }}
                     </span>
                   </div>
                 </div>

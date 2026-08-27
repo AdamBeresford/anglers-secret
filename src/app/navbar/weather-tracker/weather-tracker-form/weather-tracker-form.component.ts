@@ -3,7 +3,7 @@ import { WeatherTrackingService } from '../services/weather-tracking.service';
 import { FormBuilder, Validators, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
-import { FishStabilityService } from '../services/fish-stability.service';
+import { FishActivityService } from '../services/fish-activity.service';
 import { FishFavouritesService } from '../../fish-favourites/services/fish-favourites.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class WeatherTrackerFormComponent implements OnInit {
 
   private fb = inject(FormBuilder);
   private weatherService = inject(WeatherTrackingService);
-  private fishStabilityService = inject(FishStabilityService);
+  private fishActivityService = inject(FishActivityService);
 
   fishFavouritesService = inject(FishFavouritesService);
   loading = this.weatherService.loadingWeatherData;
@@ -44,10 +44,10 @@ export class WeatherTrackerFormComponent implements OnInit {
 
     this.weatherService.getMultipleHistoricalWeather(location, 5).pipe(
       switchMap(() => this.weatherService.getCurrentWeather(location)),
-      switchMap(() => this.fishStabilityService.getAllFishStability())
+      switchMap(() => this.fishActivityService.getBiteForecast())
     ).subscribe({
-      next: (stabilityBySpecies) => {
-        this.fishStabilityService.fishStability.set(stabilityBySpecies)
+      next: (forecast) => {
+        this.fishActivityService.biteForecast.set(forecast);
         this.weatherService.loadingWeatherData.set(false);
         this.weatherService.displayWeatherData.set(true);
       },
