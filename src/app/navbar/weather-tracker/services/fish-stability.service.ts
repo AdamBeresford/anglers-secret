@@ -81,7 +81,6 @@ export class FishStabilityService {
         const result: FishStabilityMap = {
           [FishSpecies.PIKE]: 'caution',
           [FishSpecies.PERCH]: 'caution',
-          [FishSpecies.BASS]: 'caution',
           [FishSpecies.TROUT]: 'caution',
           [FishSpecies.COMMON_CARP]: 'caution',
           [FishSpecies.MIRROR_CARP]: 'caution',

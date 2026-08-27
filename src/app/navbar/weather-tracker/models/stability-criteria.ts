@@ -28,10 +28,6 @@ export const stabilityCriteriaMap: Record<FishSpecies, WeightedStabilityCriteria
     thresholds: { tempThreshold: 2, windThreshold: 4, rainThreshold: 1.2, cloudThreshold: 20, uvThreshold: 2 },
     weights:    { temp: 0.4, rain: 0.25, cloud: 0.2, wind: 0.1, uv: 0.05 }
   },
-  bass: {
-    thresholds: { tempThreshold: 2, windThreshold: 3, rainThreshold: 1, cloudThreshold: 15, uvThreshold: 2 },
-    weights:    { temp: 0.45, rain: 0.2, cloud: 0.2, wind: 0.1, uv: 0.05 }
-  },
   trout: {
     thresholds: { tempThreshold: 1, windThreshold: 2.5, rainThreshold: 0.7, cloudThreshold: 10, uvThreshold: 1 },
     weights:    { temp: 0.5, rain: 0.25, cloud: 0.15, wind: 0.05, uv: 0.05 }

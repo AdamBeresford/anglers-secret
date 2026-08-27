@@ -8,7 +8,6 @@ export const fishList: FishDisplayItem[] = [
   { name: 'Perch', image: 'perch-icon.png' },
   { name: 'Trout', image: 'trout-icon.png' },
   { name: 'Common Carp', image: 'common-carp-icon.png' },
-  { name: 'Bass', image: 'bass-icon.png' },
   { name: 'Mirror Carp', image: 'mirror-carp-icon.png' },
   { name: 'Barbel', image: 'barbel-icon.png' },
   { name: 'Zander', image: 'zander-icon.png' },

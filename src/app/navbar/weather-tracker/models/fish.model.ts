@@ -1,7 +1,6 @@
 export enum FishSpecies {
   PIKE = 'pike',
   PERCH = 'perch',
-  BASS = 'bass',
   TROUT = 'trout',
   COMMON_CARP = 'commonCarp',
   MIRROR_CARP = 'mirrorCarp',
