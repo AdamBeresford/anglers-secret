@@ -87,6 +87,13 @@
   justify-content: center;
 }
 
+.how-link {
+  align-self: center;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  padding-right: 1rem;
+}
+
 // The card stretches to match the weather card, so centre the tiles in the
 // leftover height and let them share the full width between them.
 .bite-forecast-card .card-content {
@@ -192,18 +199,20 @@
   }
 }
 
-// Band colours: pill background/text pairs and meter fills
-.band-pill.band-prime  { background: #1b5e20; color: #ffffff; }
-.band-pill.band-good   { background: #2e7d32; color: #ffffff; }
-.band-pill.band-fair   { background: #f5c518; color: #4a3a00; }
-.band-pill.band-slow   { background: #e07b2e; color: #ffffff; }
-.band-pill.band-off    { background: #c62828; color: #ffffff; }
+// Band colours, shared by the score pill and the meter fill
+.band-prime { background: #1b5e20; }
+.band-good  { background: #2e7d32; }
+.band-fair  { background: #f5c518; }
+.band-slow  { background: #e07b2e; }
+.band-off   { background: #c62828; }
 
-.meter-fill.band-prime { background: #1b5e20; }
-.meter-fill.band-good  { background: #2e7d32; }
-.meter-fill.band-fair  { background: #f5c518; }
-.meter-fill.band-slow  { background: #e07b2e; }
-.meter-fill.band-off   { background: #c62828; }
+.band-pill {
+  color: #ffffff;
+
+  &.band-fair {
+    color: #4a3a00;
+  }
+}
 
 .no-favourites {
   text-align: center;

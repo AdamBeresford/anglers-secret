@@ -6,6 +6,7 @@ import { LoginComponent } from './navbar/login/login.component';
 import { FishFavouritesComponent } from './navbar/fish-favourites/fish-favourites.component';
 import { AccountComponent } from './navbar/account/account.component';
 import { PrivacyComponent } from './navbar/privacy/privacy.component';
+import { HowItWorksComponent } from './navbar/how-it-works/how-it-works.component';
 import { authGuard } from './auth/auth.guard';
 
 export const APP_ROUTES: Routes = [
@@ -19,4 +20,5 @@ export const APP_ROUTES: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'account', component: AccountComponent, canActivate: [authGuard] },
   { path: 'privacy', component: PrivacyComponent },
+  { path: 'how-it-works', component: HowItWorksComponent },
 ];

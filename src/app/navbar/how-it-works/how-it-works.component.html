@@ -1,0 +1,87 @@
+<div class="how-container content">
+  <h1 class="title is-4">How the Bite Forecast works</h1>
+
+  <p>
+    When you search a location, we fetch the current conditions and the past five days of
+    weather for it, then score how likely each of your chosen species is to be feeding.
+    The result is a 0&ndash;100 activity score, banded from <strong>Switched off</strong> to
+    <strong>Prime</strong>, with the biggest factors shown alongside it. Here's exactly what
+    goes into that number.
+  </p>
+
+  <h2 class="title is-5">The starting point: temperature and season</h2>
+  <p>
+    Fish are cold-blooded, so water temperature sets their appetite &mdash; it's the
+    strongest-evidenced factor in fish biology. Water warms and cools more slowly than air,
+    so we estimate it from a weighted average of the last few days' air temperatures rather
+    than today's reading alone. Each species has its own comfort bands: carp feed hardest at
+    12&ndash;22&nbsp;&deg;C and largely stop below 4&nbsp;&deg;C, chub keep feeding down to
+    near freezing, wels catfish barely feed below 10&nbsp;&deg;C, and trout go quiet in heat.
+    On top of that, every species has a seasonal rhythm &mdash; pike peak from autumn to late
+    winter, catfish in high summer &mdash; and the forecast follows it.
+  </p>
+
+  <h2 class="title is-5">The direction of change</h2>
+  <p>
+    Anglers have always known a sharp cold snap kills sport, and the science agrees &mdash;
+    it's the single most reliable negative event we score. But change isn't always bad: a
+    warming trend in the cooler months is a classic feeding trigger, and in a summer heatwave
+    a cooling breakdown actually helps. The forecast scores the <em>direction</em> of the
+    temperature trend, not just whether the weather has been steady.
+  </p>
+
+  <h2 class="title is-5">Rain, and why it isn't simply bad</h2>
+  <p>
+    Rain oxygenates the water, washes food in, and adds colour that makes fish feed
+    confidently. For river species the classic prime window is a river
+    <em>fining down</em> &mdash; dropping and clearing a day or two after rain. Salmon
+    anglers live by "fresh water brings fresh fish", and a warm, coloured river is the best
+    barbel fishing there is. So recent rain followed by a drier day scores a bonus for those
+    species, while a bone-dry settled week counts against salmon. The genuinely bad rain is
+    <em>cold</em> rain &mdash; a downpour arriving with falling temperatures &mdash; and the
+    forecast penalises exactly that.
+  </p>
+
+  <h2 class="title is-5">Light, wind and pressure</h2>
+  <p>
+    <strong>Cloud cover</strong> matters more than most anglers realise &mdash; it's one of
+    the few factors with solid catch-rate studies behind it. Overcast skies effectively
+    extend dawn and dusk all day, which suits nearly every species and especially light-shy
+    hunters like zander. The exception is winter, when sunshine warming shallow water is a
+    small positive. <strong>Wind</strong> is scored two ways: a moderate ripple beats a flat
+    calm, and the compass matters &mdash; the old rhyme "wind from the west, fish bite best;
+    wind from the east, fish bite least" encodes the real difference between mild Atlantic
+    air and cold continental air. <strong>Barometric pressure</strong> gets a deliberately
+    modest weight: controlled studies show fish don't respond to pressure directly (a fish
+    swimming up a foot changes its pressure more than any weather front), but a falling
+    barometer predicts the cloudy, mild, unsettled weather that genuinely does bring fish on
+    the feed.
+  </p>
+
+  <h2 class="title is-5">The welfare warning</h2>
+  <p>
+    Some species are harmed by being caught in hot water: above roughly 19&ndash;20&nbsp;&deg;C
+    trout and salmon struggle to recover after release, and many UK fisheries and river
+    authorities formally ask anglers to stop. Pike suffer similarly in warm water. When our
+    water-temperature estimate crosses those documented thresholds, the forecast doesn't just
+    say "poor" &mdash; it says <strong>don't fish for them today</strong>.
+  </p>
+
+  <h2 class="title is-5">Honest caveats</h2>
+  <ul>
+    <li>Air temperature is a proxy &mdash; we can't measure your actual water, and deep or
+      spring-fed venues will drift from our estimate.</li>
+    <li>We don't know your venue: depth, colour, stock levels and angling pressure all matter
+      and aren't in any weather feed.</li>
+    <li>River species' scores assume the river responds normally to rain; we don't have live
+      river-level data.</li>
+    <li>The score is an outlook, not a promise &mdash; time of day, watercraft and bait
+      choice will always beat the weather. Fish dawn and dusk when in doubt.</li>
+  </ul>
+
+  <p>
+    Choose the species you want forecast on the
+    <a routerLink="/species-select">Species Select</a> page, then search a postcode on the
+    <a routerLink="/weather-tracker">Weather Tracker</a>.
+  </p>
+</div>

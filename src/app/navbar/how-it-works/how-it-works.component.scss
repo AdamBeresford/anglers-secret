@@ -1,0 +1,14 @@
+// Long-form content page — scrolls inside the app shell like the privacy notice
+.how-container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+
+  .title {
+    margin-top: 2rem;
+  }
+
+  .title.is-4 {
+    margin-top: 0;
+  }
+}
