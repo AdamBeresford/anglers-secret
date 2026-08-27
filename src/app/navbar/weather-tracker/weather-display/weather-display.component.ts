@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
 import { FishActivityService } from '../services/fish-activity.service';
 import { FishFavouritesService } from '../../fish-favourites/services/fish-favourites.service';
 import { FishSpecies } from '../models/fish.model';
-import { ACTIVITY_BAND_LABELS, SpeciesForecast } from '../models/bite-forecast.model';
+import { ACTIVITY_BAND_LABELS, ActivityBand, SpeciesForecast } from '../models/bite-forecast.model';
 
 @Component({
     selector: 'app-weather-display',
@@ -32,17 +32,8 @@ export class WeatherDisplayComponent {
     return this.fishActivityService.biteForecast()?.[this.mapFishNameToSpecies(fishName)] ?? null;
   }
 
-  statusFor(fishName: string): 'good' | 'caution' | 'poor' {
-    const forecast = this.forecastFor(fishName);
-    if (!forecast) return 'caution';
-    if (forecast.band === 'prime' || forecast.band === 'good') return 'good';
-    if (forecast.band === 'fair') return 'caution';
-    return 'poor';
-  }
-
-  labelFor(fishName: string): string {
-    const forecast = this.forecastFor(fishName);
-    return forecast ? ACTIVITY_BAND_LABELS[forecast.band] : 'Fair';
+  bandLabel(band: ActivityBand): string {
+    return ACTIVITY_BAND_LABELS[band];
   }
 
   private mapFishNameToSpecies(name: string): FishSpecies {

@@ -51,30 +51,39 @@
     }
 
     @if (fishActivityService.biteForecast()) {
-      <div class="card summary-card fish-stability-card">
+      <div class="card summary-card bite-forecast-card">
         <header class="card-header">
-          <p class="card-header-title fish-stability-header">Bite Forecast</p>
+          <p class="card-header-title bite-forecast-header">Bite Forecast</p>
         </header>
 
         <div class="card-content">
           @if (fishList().length > 0) {
-            <div class="fish-content-container" [class.single-column]="fishList().length <= 2">
+            <div class="forecast-grid" [class.single-column]="fishList().length <= 2">
               @for (fish of fishList(); track fish.name) {
-                <div
-                  class="fish-content"
-                  [ngClass]="'tile-' + statusFor(fish.name)"
-                >
-                  <img [src]="'../../assets/' + fish.image" [alt]="fish.name" />
-                  <div class="fish-details">
-                    <span class="fish-title">{{ fish.name }}</span>
-                    <span
-                      class="fish-name"
-                      [ngClass]="'stability-' + statusFor(fish.name)"
-                    >
-                      {{ labelFor(fish.name) }}
-                    </span>
+                @if (forecastFor(fish.name); as forecast) {
+                  <div class="forecast-tile" [class.welfare]="forecast.welfareWarning">
+                    <div class="tile-head">
+                      <img [src]="'../../assets/' + fish.image" [alt]="fish.name" />
+                      <span class="fish-title">{{ fish.name }}</span>
+                      <span class="band-pill" [ngClass]="'band-' + forecast.band">
+                        {{ forecast.welfareWarning ? 'Don\'t fish' : bandLabel(forecast.band) }} · {{ forecast.score }}
+                      </span>
+                    </div>
+                    <div class="meter">
+                      <div class="meter-fill" [ngClass]="'band-' + forecast.band" [style.width.%]="forecast.score"></div>
+                    </div>
+                    @if (forecast.insights.length > 0) {
+                      <div class="insight-chips">
+                        @for (insight of forecast.insights.slice(0, 2); track insight.label) {
+                          <span class="insight" [class.negative]="insight.points < 0">
+                            {{ insight.points > 0 ? '+' : '−' }} {{ insight.label }}
+                          </span>
+                        }
+                      </div>
+                    }
+                    <p class="tip">{{ forecast.tip }}</p>
                   </div>
-                </div>
+                }
               }
             </div>
           } @else {

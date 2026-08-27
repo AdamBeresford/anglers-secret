@@ -83,20 +83,20 @@
   color: #7a7a7a;
 }
 
-.fish-stability-header {
+.bite-forecast-header {
   justify-content: center;
 }
 
 // The card stretches to match the weather card, so centre the tiles in the
 // leftover height and let them share the full width between them.
-.fish-stability-card .card-content {
+.bite-forecast-card .card-content {
   display: flex;
   flex-direction: column;
   justify-content: center;
   height: calc(100% - 48px); // header height
 }
 
-.fish-content-container {
+.forecast-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.6rem;
@@ -104,79 +104,112 @@
   &.single-column {
     grid-template-columns: 1fr;
   }
+}
 
-  .fish-content {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 0.5rem 0.75rem;
-    border-radius: 10px;
+.forecast-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: 10px;
+  background: #fafafa;
+  min-width: 0;
 
-    img {
-      height: 46px;
-      width: 46px;
-      flex-shrink: 0;
-    }
+  &.welfare {
+    background: #fdf2f2;
+    border: 1px solid #f0c4c4;
   }
 
-  .fish-details {
+  .tile-head {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2px;
-    min-width: 0;
+    align-items: center;
+    gap: 8px;
+
+    img {
+      height: 34px;
+      width: 34px;
+      flex-shrink: 0;
+    }
 
     .fish-title {
       font-weight: bold;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: #363636;
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
+  }
+
+  .band-pill {
+    font-weight: bold;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .meter {
+    height: 5px;
+    border-radius: 999px;
+    background: #e8e8e8;
+    overflow: hidden;
+
+    .meter-fill {
+      height: 100%;
+      border-radius: 999px;
+    }
+  }
+
+  .insight-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+
+    .insight {
+      font-size: 0.66rem;
+      font-weight: 600;
+      color: #2e7d32;
+      background: #eef7ee;
+      border-radius: 999px;
+      padding: 1px 7px;
+      white-space: nowrap;
+
+      &.negative {
+        color: #b32424;
+        background: #faeeee;
+      }
+    }
+  }
+
+  .tip {
+    font-size: 0.72rem;
+    line-height: 1.35;
+    color: #6b6b6b;
+    margin: 0;
   }
 }
 
-// Soft tint per status so each tile reads at a glance
-.tile-good {
-  background: #f2fcf2;
-}
+// Band colours: pill background/text pairs and meter fills
+.band-pill.band-prime  { background: #1b5e20; color: #ffffff; }
+.band-pill.band-good   { background: #2e7d32; color: #ffffff; }
+.band-pill.band-fair   { background: #f5c518; color: #4a3a00; }
+.band-pill.band-slow   { background: #e07b2e; color: #ffffff; }
+.band-pill.band-off    { background: #c62828; color: #ffffff; }
 
-.tile-caution {
-  background: #fffdf2;
-}
-
-.tile-poor {
-  background: #fdf2f2;
-}
+.meter-fill.band-prime { background: #1b5e20; }
+.meter-fill.band-good  { background: #2e7d32; }
+.meter-fill.band-fair  { background: #f5c518; }
+.meter-fill.band-slow  { background: #e07b2e; }
+.meter-fill.band-off   { background: #c62828; }
 
 .no-favourites {
   text-align: center;
   padding: 1rem 0;
 }
 
-.fish-name {
-  font-weight: bold;
-  font-size: 0.75rem;
-  padding: 1px 8px;
-  border-radius: 8px;
-  display: inline-block;
-  text-align: center;
-  white-space: nowrap;
-}
-
-// Solid, saturated pills so the status stands clearly off the soft tile tint
-.stability-good {
-  background-color: #2e7d32;
-  color: #ffffff;
-}
-
-.stability-caution {
-  background-color: #f5c518;
-  color: #4a3a00;
-}
-
-.stability-poor {
-  background-color: #c62828;
-  color: #ffffff;
-}
 
 // History: one responsive grid of equal-width day cards
 .history-title {
@@ -206,13 +239,47 @@
 
 // Shorter laptop screens: trim the tallest elements so results still fit in view
 @media (max-height: 820px) {
-  .fish-content-container .fish-content {
-    gap: 10px;
+  .forecast-tile {
+    gap: 0.25rem;
+    padding: 0.4rem 0.55rem;
 
-    img {
-      height: 38px;
-      width: 38px;
+    .tile-head img {
+      height: 28px;
+      width: 28px;
     }
+
+    .tip {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .view-container {
+    padding-bottom: 0.5rem;
+  }
+
+  .back-btn-container {
+    padding: 4px 0;
+  }
+
+  .summary-row {
+    gap: 1rem;
+  }
+
+  .history-title {
+    margin: 0.6rem 0 0.5rem;
+  }
+
+  .history-card .card-content {
+    padding: 0.5rem 0.9rem;
+  }
+}
+
+// Only genuinely short windows lose the tip line; score, meter and chips stay
+@media (max-height: 700px) {
+  .forecast-tile .tip {
+    display: none;
   }
 
   .summary-card .card-content {
