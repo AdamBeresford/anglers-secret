@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "the-fishing-spot": {
+    "bite-barometer": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/the-fishing-spot",
+            "outputPath": "dist/bite-barometer",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -62,10 +62,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "the-fishing-spot:build:production"
+              "buildTarget": "bite-barometer:build:production"
             },
             "development": {
-              "buildTarget": "the-fishing-spot:build:development"
+              "buildTarget": "bite-barometer:build:development"
             }
           },
           "options": {
@@ -76,7 +76,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "the-fishing-spot:build"
+            "buildTarget": "bite-barometer:build"
           }
         },
         "test": {

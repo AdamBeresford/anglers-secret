@@ -18,10 +18,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'Anglers Secret' title`, () => {
+  it(`should have the 'Bite Barometer' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('Anglers Secret');
+    expect(app.title).toEqual('Bite Barometer');
   });
 
   it('should render the navbar', () => {

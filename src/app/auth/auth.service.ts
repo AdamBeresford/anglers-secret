@@ -3,7 +3,7 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { AuthResponse, User } from './user.model';
 
-export const TOKEN_STORAGE_KEY = 'anglers-secret-token';
+export const TOKEN_STORAGE_KEY = 'bite-barometer-token';
 
 @Injectable({
   providedIn: 'root',

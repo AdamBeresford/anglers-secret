@@ -1,1 +1,1 @@
-# AnglersSecret - Full-stack - MongoDB + ExpressJS + Angular + Node + Bulma
+# BiteBarometer - Full-stack - MongoDB + ExpressJS + Angular + Node + Bulma

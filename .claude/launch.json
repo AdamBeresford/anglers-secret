@@ -2,7 +2,7 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "anglers-secret",
+      "name": "bite-barometer",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["start"],
       "port": 4200

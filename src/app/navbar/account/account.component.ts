@@ -65,7 +65,7 @@ export class AccountComponent {
 
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'anglers-secret-my-data.json';
+    link.download = 'bite-barometer-my-data.json';
     link.click();
 
     URL.revokeObjectURL(url);

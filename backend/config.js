@@ -22,8 +22,8 @@ function requiredSecret(name, developmentFallback) {
 module.exports = {
   isProduction,
   port: Number(process.env.PORT) || 3000,
-  mongoUri: process.env.MONGO_URI || 'mongodb://localhost:27017/anglersSecret',
-  jwtSecret: requiredSecret('JWT_SECRET', 'anglers-secret-dev-key'),
+  mongoUri: process.env.MONGO_URI || 'mongodb://localhost:27017/biteBarometer',
+  jwtSecret: requiredSecret('JWT_SECRET', 'bite-barometer-dev-key'),
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
   // Absent key is handled per-request so the app still boots for auth-only work
   weatherApiKey: process.env.WEATHER_API_KEY || '',
