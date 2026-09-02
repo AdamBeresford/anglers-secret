@@ -1,3 +1,5 @@
+const path = require('path');
+
 const express = require('express');
 const axios = require('axios');
 const mongoose = require('mongoose');
@@ -12,6 +14,20 @@ const config = require('./config');
 const User = require('./models/User');
 
 const app = express();
+
+// Heroku terminates TLS at its router and forwards the real client address in
+// X-Forwarded-For. Without this the rate limiters below would see the router
+// rather than the visitor and throttle everyone as a single IP.
+app.set('trust proxy', 1);
+
+// Keep the deployed site on the canonical https origin. Skipped outside
+// production so plain http://localhost development is unaffected.
+if (config.isProduction) {
+  app.use((req, res, next) => {
+    if (req.secure) return next();
+    res.redirect(308, `https://${req.headers.host}${req.originalUrl}`);
+  });
+}
 
 app.use(helmet());
 app.use(cors());
@@ -247,6 +263,20 @@ app.delete('/api/account', requireAuth, async (req, res) => {
     logError('Account deletion failed', error);
     res.status(500).json({ message: 'An error occurred' });
   }
+});
+
+// The API and the Angular build share one dyno, so the browser only ever talks
+// to this origin. Static assets are served first; anything else falls through to
+// index.html because Angular resolves routes like /privacy on the client. This
+// sits below every /api route, so an unmatched API path still answers with JSON
+// instead of quietly returning the HTML shell.
+const browserDist = path.join(__dirname, '..', 'dist', 'bite-barometer', 'browser');
+app.use(express.static(browserDist));
+app.get('*', (req, res) => {
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).json({ message: 'Not found' });
+  }
+  res.sendFile(path.join(browserDist, 'index.html'));
 });
 
 app.listen(config.port, () => {
